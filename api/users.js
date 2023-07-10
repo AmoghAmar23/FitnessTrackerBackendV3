@@ -28,8 +28,8 @@ router.post("/register",async(req,res)=>{
 router.post("/login",async(req,res)=>{
     try{
         const user = await getUser(req.body)
-        const token = JWT.sign({id:user.id, username:user.username},"secretKey")
-        res.json({token})
+        const token = JWT.sign({id:user.id, username:user.username},"neverTell")
+        res.json({"message": "you're logged in!", "user":{id:user.id,username:user.username}, token})
     } catch(error){
         res.status(500).json(error)
     }
@@ -41,15 +41,24 @@ router.get("/me",async(req,res)=>{
     //auth =  "Bearer asjdkledkajfgkleakl"
     const token = auth ? auth.split(" ")[1] : null
     if (!token) {
-        throw new Error("You are not logged in")
+        // res.statusCode=401
+        // throw new Error("You are not logged in")
+        res.status(401).json({"message":"You must be logged in to perform this action", error:"Invalid Credentials", name: "Invalid Username"})
+        return
     }
-    const decoded = JWT.verify(token, "secretKey")
+    const decoded = JWT.verify(token, "neverTell")
+    if (!decoded){
+        // res.statusCode=401
+        // throw new Error("Invalid Credentials")
+        res.status(401).json({"message":"invalid credentials"})
+        return
+    }
 
     try{
         const user = await getUserByUsername(decoded.username)
         res.json(user)
     } catch(error){
-        res.status(500).json(error)
+        res.status(res.statusCode===401 ? res.statusCode : 500).json(error)
     }
 })
 
@@ -58,10 +67,14 @@ router.get("/:username/routines",async(req,res)=>{
     const auth = req.headers.authorization
     const token = auth ? auth.split(" ")[1] : null
     if (!token) {
-        throw new Error("You are not logged in")
+        res.status(401).json({"message":"You must be logged in to perform this action", error:"Invalid Credentials", name: "Invalid Username"})
+        return 
     }
-    const decoded = JWT.verify(token, "secretKey")
-
+    const decoded = JWT.verify(token, "neverTell")
+    if (!decoded) {
+        res.status(401).json({"message":"You must be logged in to perform this action", error:"Invalid Credentials", name: "Invalid Username"})
+        return 
+    }
     try{
         const routines = await getPublicRoutinesByUser(decoded.username)
         res.json(routines)
