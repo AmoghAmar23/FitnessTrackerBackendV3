@@ -77,6 +77,7 @@ router.get("/:username/routines",async(req,res)=>{
     }
     try{
         const routines = await getPublicRoutinesByUser(decoded.username)
+        console.log("======from get method=======",routines)
         res.json(routines)
     } catch(error){
         res.status(500).json(error)

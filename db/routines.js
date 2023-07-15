@@ -51,7 +51,7 @@ async function getAllRoutines() {
       // Fetch activity rows for each parent
       const routineactivityQuery = `
         SELECT a.id, a.name, a.description, ra.duration, ra.count,
-        ra."routineId", ra."activityId" as "routineActivityId"
+        ra."routineId", ra."id" as "routineActivityId"
         FROM routineactivities ra
         INNER JOIN activities a
         ON a."id" = ra."activityId"
@@ -108,7 +108,7 @@ async function getAllPublicRoutines() {
     // Fetch activity rows for each parent
     const routineactivityQuery = `
       SELECT a.id, a.name, a.description,ra.duration, ra.count,
-      ra."routineId", ra."activityId" as "routineActivityId"
+      ra."routineId", ra."id" as "routineActivityId"
       FROM routineactivities ra
       INNER JOIN activities a
       ON a."id" = ra."activityId"
@@ -142,7 +142,7 @@ async function getAllRoutinesByUser({ username }) {
      // Fetch activity rows for each parent
      const routineactivityQuery = `
        SELECT a.id, a.name, a.description,ra.duration, ra.count,
-       ra."routineId", ra."activityId" as "routineActivityId"
+       ra."routineId", ra."id" as "routineActivityId"
        FROM routineactivities ra
        INNER JOIN activities a
        ON a."id" = ra."activityId"
@@ -174,10 +174,11 @@ async function getPublicRoutinesByUser({ username }) {
     {
       const routine = rows[i];
   
+      //         ra."routineId", ra."id" as "routineActivityId"
       // Fetch activity rows for each parent
       const routineactivityQuery = `
         SELECT a.id, a.name, a.description,ra.duration, ra.count,
-        ra."routineId", ra."activityId" as "routineActivityId"
+        ra."routineId", ra."id" as "routineActivityId"
         FROM routineactivities ra
         INNER JOIN activities a
         ON a."id" = ra."activityId"
@@ -215,7 +216,7 @@ async function getPublicRoutinesByActivity({ id }) {
       // Fetch activity rows for each parent
       const routineactivityQuery = `
         SELECT a.id, a.name, a.description,ra.duration, ra.count,
-        ra."routineId", ra."activityId" as "routineActivityId"
+        ra."routineId", ra."id" as "routineActivityId"
         FROM routineactivities ra
         INNER JOIN activities a
         ON a."id" = ra."activityId"

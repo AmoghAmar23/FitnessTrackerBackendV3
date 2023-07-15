@@ -482,7 +482,7 @@ describe("DB Routines", () => {
       } = await client.query(
         `
           SELECT *
-          from routine_activities
+          from routineactivities
           WHERE id = $1;
         `,
         [fakeRoutineActivity.id]

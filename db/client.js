@@ -12,12 +12,16 @@ const { Pool } = require('pg');
 //   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
 // });
 
+//postgres://amogh:_2dmrWjVXmPAPzkXH98Dkxu7yhECXt6s0QD0H@dpg-cioo0fdph6elhbpdoltg-a.oregon-postgres.render.com/fitnessdev
+//postgres://amogh:WjVXmPAPzkXH98Dkxu7yhECXt6s0QD0H@dpg-cioo0fdph6elhbpdoltg-a.oregon-postgres.render.com/fitnessdev_2dmr
 const client = new Pool ({
-  host: '3.141.45.14',
+  host: 'dpg-cioo0fdph6elhbpdoltg-a.oregon-postgres.render.com',
   port: 5432,
-  database: 'fitness-dev',
-  user: 'postgres',
-  password: 'Albino778899',
+  database: 'fitnessdev_2dmr',
+  user: 'amogh',
+  password: 'WjVXmPAPzkXH98Dkxu7yhECXt6s0QD0H',
+  keepAlive: true,
+  keepAliveInitialDelayMillis: 10000,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
 
 })
@@ -26,3 +30,13 @@ const client = new Pool ({
 // } 
 
 module.exports = client;
+
+
+// host: '3.141.45.14',
+//   port: 5432,
+//   database: 'fitness-dev',
+//   user: 'postgres',
+//   password: 'Albino778899',
+//   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+
+// })
